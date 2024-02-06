@@ -1,4 +1,6 @@
-export interface Stores {
+import {Store, translateStoresResponse} from './storesTranslators';
+
+export interface StoreResponse {
   id: string;
   name: string;
   address: Address;
@@ -35,13 +37,15 @@ export interface Task {
   description: string;
   assigned: boolean;
 }
-export const getStores = async (): Promise<Stores[]> => {
+export const getStores = async (): Promise<Store[]> => {
   try {
     const response = await fetch(
       'https://ikp-mobile-challenge-backend.up.railway.app/stores',
     );
     const resJson = await response.json();
-    return resJson;
+    const processedResponse = translateStoresResponse(resJson);
+    console.log('processedResponse', processedResponse);
+    return processedResponse;
   } catch (error) {
     console.error('Error fetching data', error);
     throw error;

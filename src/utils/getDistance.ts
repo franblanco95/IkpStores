@@ -1,4 +1,4 @@
-export function calcularDistancia(lat1, lon1, lat2, lon2) {
+export function calculateDistance(lat1, lon1, lat2, lon2) {
   // Convertir grados a radianes
   const toRadian = angle => (Math.PI / 180) * angle;
 

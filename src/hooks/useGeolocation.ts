@@ -4,14 +4,14 @@ import Geolocation from '@react-native-community/geolocation';
 
 const useGeolocation = () => {
   const [currentPosition, setCurrentPosition] = useState({
-    latitud: 0,
-    longitud: 0,
+    latitude: 0,
+    longitude: 0,
   });
 
   useEffect(() => {
     const onLocationSuccess = info => {
       const {latitude, longitude} = info.coords;
-      setCurrentPosition({latitud: latitude, longitud: longitude});
+      setCurrentPosition({latitude: latitude, longitude: longitude});
     };
 
     const onLocationError = error => {

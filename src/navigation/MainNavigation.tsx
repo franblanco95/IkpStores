@@ -3,10 +3,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import StoreScreen from '../screens/StoreScreen';
+import {Store} from '../services/stores/storesTranslators';
 
 export type MainStackParamList = {
   Home: undefined;
-  Store: undefined;
+  Store: {store: Store};
 };
 
 const Stack = createNativeStackNavigator<MainStackParamList>();

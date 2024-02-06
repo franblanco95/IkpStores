@@ -8,12 +8,12 @@ import {
 } from 'react-native';
 import React from 'react';
 import Carousel from 'react-native-snap-carousel';
-import {calcularDistancia} from '../utils/getDistance';
+import {calculateDistance} from '../utils/getDistance';
 import useGeolocation from '../hooks/useGeolocation';
-import {Stores} from '../services/stores/storesService';
+import {Store} from '../services/stores/storesTranslators';
 
 type CarouselProps = {
-  data: Stores[];
+  data: Store[];
   mapRef: any;
   navigation: any;
 };
@@ -23,34 +23,31 @@ const IkpCarousel: React.FC<CarouselProps> = ({data, mapRef, navigation}) => {
 
   const onStoreChange = (index: number) => {
     const store = data[index];
-    const mapRegion = {
-      latitude: parseFloat(store.address.coordinate.lat),
-      longitude: parseFloat(store.address.coordinate.lng),
-      latitudeDelta: 0.02,
-      longitudeDelta: 0.02,
-    };
-    mapRef.current.animateToRegion(mapRegion, 500);
+    mapRef.current.animateToRegion(store.address.coordinate, 500);
   };
 
-  const renderItem = ({item, index}: {item: Stores; index: number}) => {
-    const distancia = calcularDistancia(
-      currentPosition.latitud,
-      currentPosition.longitud,
-      parseFloat(item.address.coordinate.lat),
-      parseFloat(item.address.coordinate.lng),
+  const renderItem = ({item, index}: {item: Store; index: number}) => {
+    const distance = calculateDistance(
+      currentPosition.latitude,
+      currentPosition.longitude,
+      item.address.coordinate.latitude,
+      item.address.coordinate.longitude,
     ).toFixed(2);
 
     return (
       <View key={index} style={styles.carouselItem}>
         <Image
-          source={require('../../assets/images/tiendanimal.jpeg')}
+          source={{
+            uri: item.image,
+          }}
           style={styles.carouselImage}
         />
         <View style={styles.textCarouselContainer}>
-          <Text style={styles.carouselText}>{item.name}</Text>
-          <Text style={styles.carouselText}>Distancia: {distancia} km</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Store')}>
-            <Text style={styles.carouselText}>Ver tienda</Text>
+          <Text style={styles.carouselTitle}>{item.name}</Text>
+          <Text style={styles.carouselText}>Distance: {distance} km</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Store', {store: item})}>
+            <Text style={styles.carouselText}>Visit store</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -90,6 +87,10 @@ const styles = StyleSheet.create({
   textCarouselContainer: {
     flex: 1,
     justifyContent: 'space-between',
+  },
+  carouselTitle: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   carouselText: {
     color: 'white',
