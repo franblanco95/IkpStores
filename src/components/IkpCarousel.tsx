@@ -9,18 +9,27 @@ import {
 import React from 'react';
 import Carousel from 'react-native-snap-carousel';
 import {calculateDistance} from '../utils/getDistance';
-import useGeolocation from '../hooks/useGeolocation';
+
 import {Store} from '../services/stores/storesTranslators';
 
 type CarouselProps = {
   data: Store[];
   mapRef: any;
   navigation: any;
+  currentPosition: {
+    latitude: number;
+    longitude: number;
+  };
+  permission: boolean;
 };
 
-const IkpCarousel: React.FC<CarouselProps> = ({data, mapRef, navigation}) => {
-  const {currentPosition, error} = useGeolocation();
-
+const IkpCarousel: React.FC<CarouselProps> = ({
+  data,
+  mapRef,
+  navigation,
+  currentPosition,
+  permission,
+}) => {
   const onStoreChange = (index: number) => {
     const store = data[index];
     mapRef.current.animateToRegion(store.address.coordinate, 500);
@@ -44,7 +53,7 @@ const IkpCarousel: React.FC<CarouselProps> = ({data, mapRef, navigation}) => {
         />
         <View style={styles.textCarouselContainer}>
           <Text style={styles.carouselTitle}>{item.name}</Text>
-          {!error && (
+          {permission && (
             <Text style={styles.carouselText}>Distance: {distance} km</Text>
           )}
           <TouchableOpacity

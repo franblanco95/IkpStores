@@ -33,8 +33,6 @@
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Necesitamos acceder a tu ubicación para mostrarte tiendas cercanas y ofrecerte una experiencia personalizada.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Necesitamos acceder a tu ubicación para mostrarte tiendas cercanas y ofrecerte una experiencia personalizada.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Necesitamos acceder a tu ubicación para mostrarte tiendas cercanas y ofrecerte una experiencia personalizada.</string>
 	<key>UIAppFonts</key>

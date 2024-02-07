@@ -15,7 +15,7 @@ type HomeScreenProps = NativeStackScreenProps<MainStackParamList, 'Home'>;
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const mapRef = useRef(null);
   const {data, isLoading} = useGetStores();
-  const {currentPosition, error, checkAndRequestPermission} = useGeolocation();
+  const {currentPosition, permission} = useGeolocation();
 
   useEffect(() => {
     if (!isLoading && data && data.length > 0) {
@@ -23,12 +23,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
       mapRef.current.animateToRegion(firstStore.address.coordinate, 500);
     }
   }, [isLoading, data]);
-
-  useEffect(() => {
-    console.log('QUE PASA');
-    checkAndRequestPermission();
-    console.log('QUE PASA2');
-  }, []);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.primaryColor}}>
@@ -68,7 +62,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         </MapView>
 
         {data ? (
-          <IkpCarousel data={data} mapRef={mapRef} navigation={navigation} />
+          <IkpCarousel
+            data={data}
+            mapRef={mapRef}
+            navigation={navigation}
+            currentPosition={currentPosition}
+            permission={permission}
+          />
         ) : null}
       </View>
     </SafeAreaView>

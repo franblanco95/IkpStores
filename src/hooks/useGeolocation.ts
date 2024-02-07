@@ -14,56 +14,40 @@ const useGeolocation = () => {
     longitude: -122.4324,
   });
 
-  const [error, setError] = useState<GeolocationError | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [permission, setPermission] = useState(false);
 
   useEffect(() => {
-    const onLocationSuccess = info => {
-      const {latitude, longitude} = info.coords;
-      console.log('Exito obteniendo la posición: ', info.coords);
-      setCurrentPosition({latitude: latitude, longitude: longitude});
-    };
-
-    const onLocationError = (error: GeolocationError) => {
-      console.log('Error obteniendo la posición: ', error);
-      setError(error);
-    };
-
-    const watchId = Geolocation.watchPosition(
-      onLocationSuccess,
-      onLocationError,
-    );
-
-    return () => {
-      Geolocation.clearWatch(watchId);
-    };
+    checkAndRequestPermission();
   }, []);
 
   const checkAndRequestPermission = async () => {
-    const result = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+    const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
     console.log('result', result);
-    if (result === RESULTS.DENIED) {
-      try {
-        const permissionResult2 = await request(
-          PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
-        );
-        const permissionResult = await request(PERMISSIONS.IOS.LOCATION_ALWAYS);
-
-        if (
-          permissionResult === RESULTS.GRANTED ||
-          permissionResult2 === RESULTS.GRANTED
-        ) {
-          console.log('Permiso otorgado');
-        } else {
-          console.log('Permiso denegado');
-          // Puedes manejar el caso cuando el usuario deniega el permiso
-        }
-      } catch (error) {
-        console.error('Error al solicitar permisos: ', error);
-      }
+    if (['blocked', 'denied'].includes(result)) {
+      console.log('entro aca');
+      setError('ERROR');
+    } else {
+      getCurrentLocation();
     }
   };
 
-  return {currentPosition, error, checkAndRequestPermission};
+  const getCurrentLocation = async () => {
+    Geolocation.getCurrentPosition(
+      info => {
+        const {latitude, longitude} = info.coords;
+        console.log('Exito obteniendo la posición: ', info.coords);
+        setCurrentPosition({latitude: latitude, longitude: longitude});
+        setPermission(true);
+      },
+      (error: GeolocationError) => {
+        console.log('Error obteniendo la posición: ', error);
+        setPermission(false);
+      },
+    );
+  };
+
+  return {currentPosition, error, permission};
 };
 
 export default useGeolocation;

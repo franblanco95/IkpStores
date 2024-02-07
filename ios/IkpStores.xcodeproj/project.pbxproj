@@ -33,6 +33,7 @@
 		CA178F9D2B727C8800FCFA9C /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA178F8A2B727C8800FCFA9C /* SimpleLineIcons.ttf */; };
 		CA178F9E2B727C8800FCFA9C /* FontAwesome6_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA178F8B2B727C8800FCFA9C /* FontAwesome6_Brands.ttf */; };
 		CA178F9F2B727C8800FCFA9C /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA178F8C2B727C8800FCFA9C /* MaterialIcons.ttf */; };
+		CA85331A2B73DA6C00618A6B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA8533192B73DA6C00618A6B /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		CA178F8A2B727C8800FCFA9C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		CA178F8B2B727C8800FCFA9C /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome6_Brands.ttf; sourceTree = "<group>"; };
 		CA178F8C2B727C8800FCFA9C /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		CA8533192B73DA6C00618A6B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -154,6 +156,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CA8533192B73DA6C00618A6B /* Settings.bundle */,
 				CA178F792B727C8800FCFA9C /* Fonts */,
 				13B07FAE1A68108700A75B9A /* IkpStores */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -327,6 +330,7 @@
 				CA178F932B727C8800FCFA9C /* MaterialCommunityIcons.ttf in Resources */,
 				CA178F9C2B727C8800FCFA9C /* FontAwesome6_Solid.ttf in Resources */,
 				CA178F902B727C8800FCFA9C /* FontAwesome6_Regular.ttf in Resources */,
+				CA85331A2B73DA6C00618A6B /* Settings.bundle in Resources */,
 				CA178F9F2B727C8800FCFA9C /* MaterialIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
