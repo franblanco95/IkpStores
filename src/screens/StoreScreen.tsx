@@ -7,11 +7,16 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MainStackParamList} from '../navigation/MainNavigation';
 import {colors} from '../stylesheet/colors';
 import Entypo from 'react-native-vector-icons/Entypo';
+import StoreTasks from '../components/StoreTasks';
+import StoreShippingMethods from '../components/StoreShippingMethods';
+import StoreScreenModal from '../components/StoreScreenModal';
+import {Task} from '../services/stores/storesService';
+import Divider from '../components/Divider';
 
 type StoreScreenProps = NativeStackScreenProps<MainStackParamList, 'Store'>;
 
@@ -19,6 +24,17 @@ const height = Dimensions.get('window').height;
 
 const StoreScreen: React.FC<StoreScreenProps> = ({navigation, route}) => {
   const {store} = route.params;
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+
+  const handleCheckin = (task: Task) => {
+    setSelectedTask(task);
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <ScrollView
@@ -48,53 +64,29 @@ const StoreScreen: React.FC<StoreScreenProps> = ({navigation, route}) => {
 
         <Text style={styles.storeTitle}>{store.name}</Text>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-          <Entypo name="shop" size={27} color={colors.secondaryColor} />
+        <View style={styles.storeInfoContainer}>
+          <Entypo name="shop" size={26} color={colors.secondaryColor} />
 
           <Text style={styles.storeInfo}>
-            {store.schedule.from} a {store.schedule.end}
+            {store.schedule.from} to {store.schedule.end}
           </Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+        <View style={styles.storeInfoContainer}>
           <Entypo name="location-pin" size={27} color={colors.secondaryColor} />
           <Text style={styles.storeInfo}>{store.address.direction}</Text>
         </View>
 
-        <Text style={styles.storeSubtitle}>Tasks</Text>
+        <Divider />
 
-        {store.tasks.map(task => (
-          <View
-            key={task.id}
-            style={[
-              styles.taskContainer,
-              {
-                backgroundColor: task.assigned
-                  ? colors.secondaryColor
-                  : 'lightgrey',
-              },
-            ]}>
-            <Text>{task.description}</Text>
-            <Text>{task.assigned ? 'Asignada' : 'No Asignada'}</Text>
-          </View>
-        ))}
+        <StoreTasks tasks={store.tasks} onCheckin={handleCheckin} />
 
-        <Text style={styles.storeSubtitle}>Shipping Methods</Text>
-
-        {store.shipping_methods.map(method => (
-          <View key={method.id} style={styles.taskContainer}>
-            <Text>{method.name}</Text>
-            <Text>{method.description}</Text>
-          </View>
-        ))}
+        <StoreShippingMethods shippingMethods={store.shipping_methods} />
       </View>
+      <StoreScreenModal
+        isVisible={isModalVisible}
+        onClose={closeModal}
+        task={selectedTask}
+      />
     </ScrollView>
   );
 };
@@ -146,20 +138,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   storeInfo: {
+    flex: 1,
     fontSize: 13,
     color: 'grey',
     marginLeft: 10,
   },
-  storeSubtitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: colors.primaryColor,
-    marginVertical: 10,
-  },
-  taskContainer: {
-    margin: 10,
-    padding: 10,
-    backgroundColor: colors.secondaryColor,
-    borderRadius: 10,
+  storeInfoContainer: {
+    marginVertical: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

@@ -19,7 +19,7 @@ type CarouselProps = {
 };
 
 const IkpCarousel: React.FC<CarouselProps> = ({data, mapRef, navigation}) => {
-  const currentPosition = useGeolocation();
+  const {currentPosition, error} = useGeolocation();
 
   const onStoreChange = (index: number) => {
     const store = data[index];
@@ -44,7 +44,9 @@ const IkpCarousel: React.FC<CarouselProps> = ({data, mapRef, navigation}) => {
         />
         <View style={styles.textCarouselContainer}>
           <Text style={styles.carouselTitle}>{item.name}</Text>
-          <Text style={styles.carouselText}>Distance: {distance} km</Text>
+          {!error && (
+            <Text style={styles.carouselText}>Distance: {distance} km</Text>
+          )}
           <TouchableOpacity
             onPress={() => navigation.navigate('Store', {store: item})}>
             <Text style={styles.carouselText}>Visit store</Text>
