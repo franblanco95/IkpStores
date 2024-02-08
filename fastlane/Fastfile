@@ -1,0 +1,34 @@
+platform :ios do
+    desc "Generate .ipa"
+    lane :build_ios do
+        gym(
+            scheme: "IkpStores",
+            workspace: "./ios/IkpStores.xcworkspace",
+            configuration: "Debug",
+            export_method: "ad-hoc",
+            output_directory: "./build",
+            output_name: "ikpstore-app.ipa",
+            silent: true
+            # clean: true
+        )
+    end
+end
+
+platform :android do
+    desc "Generate .aab"
+    lane :build_android do
+        gradle(task: 'clean', project_dir: './android/')
+        gradle(
+          task: 'bundle',
+          build_type: 'Debug',
+          project_dir: './android',
+          print_command: false,
+          properties: {
+            "android.injected.signing.store.file" => "/app/debug.keystore",
+            "android.injected.signing.store.password" => "android",
+            "android.injected.signing.key.alias" => "androiddebugkey",
+            "android.injected.signing.key.password" => "android",
+          }
+        )
+    end
+end

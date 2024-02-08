@@ -1,7 +1,8 @@
 // hooks/useGeolocation.ts
 import {useState, useEffect} from 'react';
 import Geolocation from '@react-native-community/geolocation';
-import {PERMISSIONS, RESULTS, check, request} from 'react-native-permissions';
+import {PERMISSIONS, request} from 'react-native-permissions';
+import {AppState} from 'react-native';
 
 interface GeolocationError {
   code: number;
@@ -14,19 +15,28 @@ const useGeolocation = () => {
     longitude: -122.4324,
   });
 
-  const [error, setError] = useState<string | null>(null);
   const [permission, setPermission] = useState(false);
 
   useEffect(() => {
-    checkAndRequestPermission();
+    const appStateChangeHandler = (newState: string) => {
+      if (newState === 'active') {
+        checkAndRequestPermission();
+      }
+    };
+
+    const appStateSubscription = AppState.addEventListener(
+      'change',
+      appStateChangeHandler,
+    );
+    return () => {
+      appStateSubscription.remove();
+    };
   }, []);
 
   const checkAndRequestPermission = async () => {
     const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-    console.log('result', result);
     if (['blocked', 'denied'].includes(result)) {
-      console.log('entro aca');
-      setError('ERROR');
+      setPermission(false);
     } else {
       getCurrentLocation();
     }
@@ -36,18 +46,17 @@ const useGeolocation = () => {
     Geolocation.getCurrentPosition(
       info => {
         const {latitude, longitude} = info.coords;
-        console.log('Exito obteniendo la posición: ', info.coords);
         setCurrentPosition({latitude: latitude, longitude: longitude});
         setPermission(true);
       },
       (error: GeolocationError) => {
-        console.log('Error obteniendo la posición: ', error);
+        console.error('Error: ', error);
         setPermission(false);
       },
     );
   };
 
-  return {currentPosition, error, permission};
+  return {currentPosition, permission};
 };
 
 export default useGeolocation;
