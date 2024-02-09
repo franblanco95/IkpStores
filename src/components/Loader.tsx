@@ -4,7 +4,7 @@ import {colors} from '../stylesheet/colors';
 
 const Loader: React.FC = () => {
   return (
-    <View style={styles.loaderContainer}>
+    <View testID="loader-testId" style={styles.loaderContainer}>
       <ActivityIndicator size="large" color={colors.primaryColor} />
     </View>
   );

@@ -57,7 +57,7 @@ const StoreScreen: React.FC<StoreScreenProps> = ({navigation, route}) => {
             styles.storeStatusContainer,
             {backgroundColor: store.open ? 'green' : 'grey'},
           ]}>
-          <Text style={{color: 'white', fontWeight: 'bold'}}>
+          <Text style={styles.storeStatusText}>
             {store.open ? 'Open' : 'Closed'}
           </Text>
         </View>
@@ -130,6 +130,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
+  },
+  storeStatusText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   storeTitle: {
     fontSize: 25,

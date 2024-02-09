@@ -44,7 +44,6 @@ export const getStores = async (): Promise<Store[]> => {
     );
     const resJson = await response.json();
     const processedResponse = translateStoresResponse(resJson);
-    console.log('processedResponse', processedResponse);
     return processedResponse;
   } catch (error) {
     console.error('Error fetching data', error);

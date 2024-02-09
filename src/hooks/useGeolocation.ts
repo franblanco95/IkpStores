@@ -1,4 +1,3 @@
-// hooks/useGeolocation.ts
 import {useState, useEffect} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {PERMISSIONS, request} from 'react-native-permissions';

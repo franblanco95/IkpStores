@@ -25,7 +25,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   }, [isLoading, data]);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.primaryColor}}>
+    <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.mainContainer}>
         {isLoading && <Loader />}
 
@@ -48,15 +48,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
               description={store.address.direction}>
               <Image
                 source={require('../../assets/images/store-marker.png')}
-                style={{width: 45, height: 45}}
+                style={styles.markerStyle}
                 resizeMode="contain"
               />
             </Marker>
           ))}
 
           <Image
-            style={{width: '50%'}}
-            source={require('../../assets/images/iskaypet-logoo.png')}
+            style={styles.logoStyle}
+            source={require('../../assets/images/iskaypet-logo.png')}
             resizeMode="contain"
           />
         </MapView>
@@ -78,6 +78,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1,
+    backgroundColor: colors.primaryColor,
+  },
   mainContainer: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
@@ -86,5 +90,12 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     alignItems: 'center',
+  },
+  markerStyle: {
+    width: 45,
+    height: 45,
+  },
+  logoStyle: {
+    width: '50%',
   },
 });

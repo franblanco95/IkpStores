@@ -2,9 +2,9 @@ import {useQuery} from '@tanstack/react-query';
 import {getStores} from '../services/stores/storesService';
 
 export const useGetStores = () => {
-  const {isLoading, data} = useQuery({
+  const {isLoading, data, isSuccess} = useQuery({
     queryKey: ['stores'],
     queryFn: () => getStores(),
   });
-  return {isLoading, data};
+  return {isLoading, data, isSuccess};
 };

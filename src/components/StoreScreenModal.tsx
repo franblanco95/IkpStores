@@ -30,6 +30,7 @@ const StoreScreenModal: React.FC<StoreScreenModalProps> = ({
               : 'Check-in failed due to API unavailability. Please try again later!'}
           </Text>
           <TouchableOpacity
+            testID="closeButton"
             onPress={() => onClose()}
             style={styles.modalButton}>
             <Text style={styles.closeButton}>Close</Text>

@@ -17,7 +17,7 @@ const StoreShippingMethods: React.FC<StoreShippingMethodsProps> = ({
       {shippingMethods.map(method => (
         <View key={method.id} style={styles.taskContainer}>
           <Text style={styles.shippingTitle}>{method.name}:</Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.shippingSubContainer}>
             <Entypo name="level-down" size={22} color={colors.primaryColor} />
             <Text style={styles.shippingDescription}>
               ({method.description})
@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  shippingSubContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   shippingDescription: {
     color: 'white',
