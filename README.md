@@ -31,3 +31,11 @@ Follow these steps to get started with the project:
 2. Navigate to the project directory: `cd checkin-tasks-app`
 3. Install dependencies: `npm install` or `yarn install`
 4. Run the application: `npm start` or `yarn start`
+
+## Running Tests
+
+The project includes a suite of tests to ensure the reliability and functionality of its features. You can run the tests using the following command:
+
+```bash
+yarn test
+```
